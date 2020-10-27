@@ -2,11 +2,12 @@ package groceryListApp.model;
 
 public class Product {
 
+    private int productId;
     private String title;
     private double price;
     private int quantity;
     private Shop shop;
-
+    private static int productCounter;
 
     public Product(String title,
                    double price,
@@ -17,6 +18,12 @@ public class Product {
         this.title = title;
         this.quantity = quantity;
         this.shop = shop;
+        productCounter++;
+        this.productId = productCounter;
+    }
+
+    public int getProductId() {
+        return productId;
     }
 
     public String getTitle() {

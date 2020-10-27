@@ -8,12 +8,20 @@ public class GroceryList {
     private LocalDateTime dateTime;
     private String category;
     private ArrayList<Product> products;
+    private int groceryListId;
+    private static int listCounter;
 
     public GroceryList(LocalDateTime dateTime,
                        String category){
         this.dateTime = dateTime;
         this.category = category;
         this.products = new ArrayList<>();
+        listCounter++;
+        this.groceryListId = listCounter;
+    }
+
+    public int getGroceryListId() {
+        return groceryListId;
     }
 
     public LocalDateTime getDateTime() {

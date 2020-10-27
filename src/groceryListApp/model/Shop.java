@@ -6,9 +6,17 @@ public class Shop {
 
     private String title;
     private ArrayList<Product> products;
+    private int shopId;
+    private static int shopCounter;
 
     public Shop(String title){
         this.products = new ArrayList<>();
+        shopCounter++;
+        this.shopId = shopCounter;
+    }
+
+    public int getShopId() {
+        return shopId;
     }
 
     public String getTitle() {
