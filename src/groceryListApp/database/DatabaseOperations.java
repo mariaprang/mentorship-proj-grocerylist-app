@@ -3,11 +3,12 @@ package groceryListApp.database;
 import groceryListApp.model.Product;
 import groceryListApp.model.Shop;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface DatabaseOperations {
 
-    public ArrayList<Shop> getAllShops();
+    public ArrayList<Shop> getAllShops() throws SQLException;
 
     public ArrayList<Product> getProductsForShop(Shop shop);
 

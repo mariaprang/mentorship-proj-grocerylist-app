@@ -9,10 +9,17 @@ public class Shop {
     private int shopId;
     private static int shopCounter;
 
-    public Shop(String title){
+    public Shop(String title) {
+        this.title = title;
         this.products = new ArrayList<>();
         shopCounter++;
         this.shopId = shopCounter;
+    }
+
+    public Shop(String title, int id) {
+        this.title = title;
+        this.shopId = id;
+        this.products = new ArrayList<>();
     }
 
     public int getShopId() {
@@ -33,5 +40,10 @@ public class Shop {
 
     public void setProducts(ArrayList<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return title + "(" + products.size() + ")";
     }
 }

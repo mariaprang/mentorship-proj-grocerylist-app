@@ -1,13 +1,11 @@
 package groceryListApp.database;
 
-import java.sql.Connection;
-import java.sql.Statement;
+import java.sql.*;
+
 import groceryListApp.model.Product;
 import groceryListApp.model.Shop;
 
 
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class DatabaseController implements DatabaseOperations {
@@ -17,10 +15,8 @@ public class DatabaseController implements DatabaseOperations {
     private String URL = "jdbc:mysql://localhost:3306/grocery_list_app";
 
     private Connection databaseConnection; // var for database connection status
-    private Statement command; // var to store database command in
+    private Statement statement; // var to store database command in
     private ResultSet resultSet; // var to store database results coming back from table
-
-
 
     public DatabaseController(){
         try{
@@ -34,8 +30,19 @@ public class DatabaseController implements DatabaseOperations {
     }
 
     @Override
-    public ArrayList<Shop> getAllShops() {
-        return null;
+    public ArrayList<Shop> getAllShops() throws SQLException {
+
+        String command = "select * from shops";
+        statement = databaseConnection.createStatement();
+        resultSet = statement.executeQuery(command);
+        ArrayList<Shop> shops = new ArrayList<>();
+        while(resultSet.next()){
+            int shopId = resultSet.getInt("shop_id");
+            String shopTitle = resultSet.getString("shop_title");
+            Shop shop = new Shop(shopTitle, shopId);
+            shops.add(shop);
+        }
+        return shops;
     }
 
     @Override
