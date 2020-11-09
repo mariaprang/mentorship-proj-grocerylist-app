@@ -4,15 +4,11 @@ public class Product {
 
     private int productId;
     private String title;
-    private double price;
     private Shop shop;
     private static int productCounter;
 
     public Product(String title,
-                   double price,
                    Shop shop) {
-
-        this.price = price;
         this.title = title;
         this.shop = shop;
         productCounter++;
@@ -29,14 +25,6 @@ public class Product {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public Shop getShop() {
