@@ -11,19 +11,18 @@ import java.util.ArrayList;
 public class DatabaseController implements DatabaseOperations {
 
     private String username = "root";
-    private String password =  "password";
+    private String password = "password";
     private String URL = "jdbc:mysql://localhost:3306/grocery_list_app";
 
     private Connection databaseConnection; // var for database connection status
     private Statement statement; // var to store database command in
     private ResultSet resultSet; // var to store database results coming back from table
 
-    public DatabaseController(){
-        try{
+    public DatabaseController() {
+        try {
             databaseConnection = DriverManager.getConnection(URL, username, password);
             System.out.println("connection successful!");
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println("ERROR!");
             System.out.println(ex.getMessage());
         }
@@ -36,7 +35,7 @@ public class DatabaseController implements DatabaseOperations {
         statement = databaseConnection.createStatement();
         resultSet = statement.executeQuery(command);
         ArrayList<Shop> shops = new ArrayList<>();
-        while(resultSet.next()){
+        while (resultSet.next()) {
             int shopId = resultSet.getInt("shop_id");
             String shopTitle = resultSet.getString("shop_title");
             Shop shop = new Shop(shopTitle, shopId);
@@ -46,8 +45,16 @@ public class DatabaseController implements DatabaseOperations {
     }
 
     @Override
-    public ArrayList<Product> getProductsForShop(Shop shop) {
-        return null;
+    public ArrayList<String> getProductsForShop(Shop shop) throws SQLException {
+        String command = "select product_title from products where shop_id=" + shop.getShopId();
+        statement =  databaseConnection.createStatement();
+        resultSet = statement.executeQuery(command);
+        ArrayList<String> productTitles = new ArrayList<>();
+        while (resultSet.next()){
+            String productTitle = resultSet.getString("product_title");
+            productTitles.add(productTitle);
+        }
+        return productTitles;
     }
 
     @Override

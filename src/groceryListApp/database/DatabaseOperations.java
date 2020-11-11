@@ -10,7 +10,7 @@ public interface DatabaseOperations {
 
     public ArrayList<Shop> getAllShops() throws SQLException;
 
-    public ArrayList<Product> getProductsForShop(Shop shop);
+    public ArrayList<String> getProductsForShop(Shop shop) throws SQLException;
 
     public void addShop(Shop shop);
 
