@@ -1,9 +1,12 @@
 package groceryListApp.views;
 
 import groceryListApp.database.DatabaseController;
+import groceryListApp.model.Product;
 import groceryListApp.model.Shop;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -14,12 +17,12 @@ public class ShopViewGenerator {
 
 
     private final static int initialX = 15;
-    private int initialY = 50;
+    private int initialY = 70;
     private final static int gap = 190;
 
     private DatabaseController databaseController;
 
-    public ShopViewGenerator(){
+    public ShopViewGenerator() {
         this.databaseController = new DatabaseController();
     }
 
@@ -29,26 +32,40 @@ public class ShopViewGenerator {
         int prevYValue = 0;
         for (Shop shop : shops) {
             AnchorPane shopWrap = new AnchorPane();
-            shopWrap.setPrefWidth(575);
-            shopWrap.setPrefHeight(170);
-            shopWrap.setStyle("-fx-border-color: green; -fx-border-width: 1px 1px 1px 1px");
 
-            shopWrap.setLayoutX(15);
+            ScrollPane scrollPane = new ScrollPane();
+            scrollPane.setContent(shopWrap);
+            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
+
+            scrollPane.setPrefWidth(575);
+            scrollPane.setPrefHeight(170);
+            // shopWrap.setStyle("-fx-border-color: green; -fx-border-width: 1px 1px 1px 1px");
+
+            scrollPane.setLayoutX(15);
             if (shopCounter == 1) {
-                shopWrap.setLayoutY(50);
-                prevYValue = 50;
+                scrollPane.setLayoutY(initialY);
+                prevYValue = initialY;
             } else {
-               // prev = prev + 20 + 170
+                // prev = prev + 20 + 170
                 current = prevYValue + gap;
-                shopWrap.setLayoutY(current);
+                scrollPane.setLayoutY(current);
                 prevYValue = current;
-                shopCounter++;
             }
-
+            shopCounter++;
             ArrayList<String> products = databaseController.getProductsForShop(shop);
             // TODO: add code here that displays the products on the shop container
-            //shopWrap.getChildren().add(new Label(shop.getTitle()));
-            mainAnchorPane.getChildren().add(shopWrap);
+            shopWrap.getChildren().add(new Label(shop.getTitle()));
+
+            double tempLayout = 0;
+            for (String product : databaseController.getProductsForShop(shop)) {
+                CheckBox box = new CheckBox(product);
+                box.setLayoutY(tempLayout+20);
+                tempLayout = box.getLayoutY();
+                shopWrap.getChildren().add(box);
+            }
+            mainAnchorPane.getChildren().add(scrollPane);
+
         }
 
 

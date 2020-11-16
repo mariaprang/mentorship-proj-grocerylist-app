@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -24,12 +25,17 @@ public class Main extends Application {
         ArrayList<Shop> shops = databaseController.getAllShops();
         Parent root = FXMLLoader.load(getClass().getResource("views/grocery-home-page.fxml"));
 
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(root);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
         ShopViewGenerator generator = new ShopViewGenerator();
         root = generator.createShopView(shops, (AnchorPane) root);
 
         primaryStage.setTitle("Grocery List Reminder App");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(new Scene(scrollPane));
         primaryStage.show();
+        primaryStage.setResizable(false);
     }
 
 

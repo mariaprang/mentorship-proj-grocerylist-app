@@ -22,6 +22,11 @@ public class HomePageController {
 
 
     @FXML
+    public void createList(){
+
+    }
+
+    @FXML
     void showNewShopPage(ActionEvent event) throws IOException {
         // Stage = new window
         Stage newShopWindow = new Stage();
